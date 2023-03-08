@@ -57,15 +57,13 @@ export function CustomMessageCard() {
             <input type="text" id="input" value={text} onChange={handleInputChange} />
             </div>
             <div>
-              <DatePicker
-                month={selectedDate && selectedDate.getMonth()}
-                year={selectedDate && selectedDate.getFullYear()}
-                selected={selectedDate}
-                onChange={handleDateChange}
-                allowRange={false}
-                timePicker
-                showControls
-              />
+            <DatePicker
+              month={month}
+              year={year}
+              onChange={setSelectedDates}
+              onMonthChange={handleMonthChange}
+              selected={selectedDates}
+            />
               {/* <p>La fecha seleccionada es: {selectedDate && selectedDate.toString()}</p> */}
           </div>
           </Heading>
