@@ -52,19 +52,17 @@ export function CustomMessageCard() {
             Tell me the message:
           </p>
           <Heading element="h4">
-            <div>
-            <label htmlFor="input">Message: </label>
-            <input type="text" id="input" value={text} onChange={handleInputChange} />
-            </div>
-            <div>
+          <div>
             <DatePicker
-              month={month}
-              year={year}
-              onChange={setSelectedDates}
-              onMonthChange={handleMonthChange}
-              selected={selectedDates}
+              month={selectedDate && selectedDate.getMonth()}
+              year={selectedDate && selectedDate.getFullYear()}
+              selected={selectedDate}
+              onChange={handleDateChange}
+              allowRange={false}
+              timePicker
+              showControls
             />
-              {/* <p>La fecha seleccionada es: {selectedDate && selectedDate.toString()}</p> */}
+            <p>La fecha seleccionada es: {selectedDate && selectedDate.toString()}</p>
           </div>
           </Heading>
         </TextContainer>
