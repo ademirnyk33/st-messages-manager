@@ -7,8 +7,9 @@ import {
   Stack,
   Link,
   Heading,
+  TextField,
 } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
+import { TitleBar, useNavigate } from "@shopify/app-bridge-react";
 
 import { trophyImage } from "../assets";
 
@@ -17,10 +18,23 @@ import { ProductsCard, CustomMessageCard } from "../components";
 export default function HomePage() {
   return (
     <Page narrowWidth>
-      <TitleBar title="App name" primaryAction={null} />
+      <TitleBar 
+        title="Custom Message" 
+        primaryAction={{
+          content: "Create Message",
+          onAction: () => navigate("/stMessages/new"),
+        }} />
       <Layout>
         <Layout.Section>
-          <Card sectioned>
+
+          <Card 
+            title="Wellcome"
+            sectioned
+            primaryFooterAction={{
+              content: "Create Message",
+              onAction: () => navigate("/stMessages/new"),
+            }}
+          >
             <Stack
               wrap={false}
               spacing="extraTight"
@@ -57,5 +71,6 @@ export default function HomePage() {
         </Layout.Section>
       </Layout>
     </Page>
+
   );
 }
