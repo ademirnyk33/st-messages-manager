@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   Card,
   Heading,
   TextContainer,
   DisplayText,
   TextStyle,
+  Form,
   FormLayout,
   TextField,
+  Checkbox,
   DatePicker,
+  Button
 } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
@@ -36,12 +39,75 @@ export function CustomMessageCard() {
     <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
   );
 
+  const [{month, year}, setDate] = useState({month: 1, year: 2018});
+  const [selectedDates, setSelectedDates] = useState({
+    start: new Date('Wed Feb 07 2018 00:00:00 GMT-0500 (EST)'),
+    end: new Date('Wed Feb 07 2018 00:00:00 GMT-0500 (EST)'),
+  });
 
+  const handleMonthChange = useCallback(
+    (month, year) => setDate({month, year}),
+    [],
+  );
 
   return (
-    <FormLayout>
-      <TextField label="Message" onChange={() => {}} autoComplete="off" />
+    <Form onSubmit={null}>
+      <FormLayout>
 
-    </FormLayout>
+      <TextField
+          value={null}
+          onChange={null}
+          label="Message to show"
+          // type="email"
+          // autoComplete="email"
+          helpText={
+            <span>
+              This message will show in the confirmation page.
+            </span>
+          }
+        />
+        <Checkbox
+          label="Bold"
+          checked={null}
+          onChange={null}
+        />
+        <Checkbox
+          label="Italic"
+          checked={null}
+          onChange={null}
+        />
+        <div className="container">
+          <div>
+            <TextField
+              value={null}
+              onChange={null}
+              label="Start date"
+              type="date"
+              // autoComplete="email"
+              helpText={
+                <span>
+                  Use this to speficy when the message begin to diplay.
+                </span>
+              }
+            />
+            </div>
+            <div>
+            <TextField
+              value={null}
+              onChange={null}
+              label="End date"
+              type="date"
+              // autoComplete="email"
+              helpText={
+                <span>
+                  Use this to speficy when the message end to diplay.
+                </span>
+              }
+            />
+            </div>
+        </div>
+        <Button submit>Create</Button>
+      </FormLayout>
+    </Form>
   );
 }

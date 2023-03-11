@@ -10,12 +10,13 @@ import {
   TextField,
 } from "@shopify/polaris";
 import { TitleBar, useNavigate } from "@shopify/app-bridge-react";
-
+import {Redirect} from '@shopify/app-bridge/actions';
 import { trophyImage } from "../assets";
 
 import { ProductsCard, CustomMessageCard } from "../components";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   return (
     <Page narrowWidth>
       <TitleBar 
@@ -67,7 +68,7 @@ export default function HomePage() {
           </Card>
         </Layout.Section>
         <Layout.Section>
-          <CustomMessageCard />
+          {/* <CustomMessageCard /> */}
         </Layout.Section>
       </Layout>
     </Page>
