@@ -9,11 +9,11 @@ export default function ManageCode() {
     <Page>
       <TitleBar
         title="Create new message"
-        breadcrumbs={breadcrumbs}
+        /* breadcrumbs={breadcrumbs}
         primaryAction={{
             content: "Create Message",
             onAction: () => null,
-          }} 
+          }}  */
       />
       <CustomMessageCard />
     </Page>

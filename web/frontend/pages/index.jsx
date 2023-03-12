@@ -68,7 +68,7 @@ export default function HomePage() {
           </Card>
         </Layout.Section>
         <Layout.Section>
-          {/* <CustomMessageCard /> */}
+          <ProductsCard />
         </Layout.Section>
       </Layout>
     </Page>

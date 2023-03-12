@@ -15,13 +15,14 @@ import {
 import { Toast } from "@shopify/app-bridge-react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 
+
 export function CustomMessageCard() {
   const emptyToastProps = { content: null };
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [toastProps, setToastProps] = useState(emptyToastProps);
-  const fetch = useAuthenticatedFetch();
+  // const fetch = useAuthenticatedFetch();
 
-  const {
+ /*  const {
     data,
     refetch: refetchProductCount,
     isLoading: isLoadingCount,
@@ -33,11 +34,12 @@ export function CustomMessageCard() {
         setIsLoading(false);
       },
     },
-  });
+  }); */
 
   const toastMarkup = toastProps.content && !isRefetchingCount && (
     <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
   );
+
 
   const [{month, year}, setDate] = useState({month: 1, year: 2018});
   const [selectedDates, setSelectedDates] = useState({
@@ -49,14 +51,23 @@ export function CustomMessageCard() {
     (month, year) => setDate({month, year}),
     [],
   );
+  const [messageToShow, setValue] = useState('Gracias por su compra.');
+  const handleMessageChange = useCallback((newValue) => setValue(newValue), []);
+
+  const handleSubmit = useCallback((_event) => {
+    console.log(messageToShow);
+    /* setEmail('');
+    setNewsletter(false); */
+  }, []);
+
 
   return (
-    <Form onSubmit={null}>
+    <Form onSubmit={handleSubmit}>
       <FormLayout>
 
       <TextField
           value={null}
-          onChange={null}
+          onChange={ handleMessageChange }
           label="Message to show"
           // type="email"
           // autoComplete="email"
