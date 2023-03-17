@@ -10,7 +10,7 @@ const database = new sqlite3.Database(join(process.cwd(), "msg_db.sqlite"));
 const sessionDb = new SQLiteSessionStorage(database);
 
 MgsDB.db = database;
-MgsDB.init();
+//MgsDB.init();
 
 const shopify = shopifyApp({
   api: {

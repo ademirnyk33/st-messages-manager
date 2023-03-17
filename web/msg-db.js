@@ -16,22 +16,28 @@ export const MgsDB = {
 
   create: async function ({
     messageString,
+    newStartDate,
+    newEndDate,
   }) {
     try {
     await this.ready;
-    //console.log(messageString);
+    console.log("INSERT");
     const query = `
       INSERT INTO ${this.msgTableName}
       (message
-        , active)
+        , active
+        , startDate
+        , endDate)
       VALUES ( '${messageString}'
-        , 1)
+        , 1
+        , '${newStartDate}'
+        , '${newEndDate}')
       RETURNING idMsg;
     `;
     //console.log(query);
     //console.log(messageString);
     const rawResults = await this.__query(query, []);
-    console.log("Test");
+    //console.log("Test");
     return rawResults[0].id;
       } catch (error){
         console.error(error);
@@ -52,6 +58,7 @@ export const MgsDB = {
       SET
         message=?,
         active=1,
+        
       WHERE
         idMsg = ?;
     `;
@@ -86,6 +93,19 @@ export const MgsDB = {
     return true;
   },
 
+  showAll: async function () {
+    await this.ready;
+    console.log("Show All");
+    const query = `
+      SELECT * FROM ${this.msgTableName};
+    `;
+    const rows = await this.__query(query, []);
+    console.log(rows);
+    if (!Array.isArray(rows) || rows?.length !== 1) return undefined;
+
+    return "Ok";
+  },
+
   __hasMsgsTable: async function () {
     const query = `
       SELECT name FROM sqlite_schema
@@ -102,7 +122,7 @@ export const MgsDB = {
 
     /* Initializes the connection to the database */
     this.db = this.db ?? new sqlite3.Database(DEFAULT_DB_FILE);
-    console.log(this.db);
+    //console.log(this.db);
     const hasMsgsTable = await this.__hasMsgsTable();
 
     if (hasMsgsTable) {
@@ -128,7 +148,7 @@ export const MgsDB = {
 
   /* Perform a query on the database. Used by the various CRUD methods. */
   __query: function (sql, params = []) {
-    console.log(sql);
+    //console.log(sql);
     return new Promise((resolve, reject) => {
       this.db.all(sql, params, (err, result) => {
         if (err) {

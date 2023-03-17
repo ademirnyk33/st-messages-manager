@@ -11,12 +11,13 @@ export default function applyMsgApiEndpoints(app) {
 
   app.post("/api/stMessages", async (req, res) => {
     try {
-
-      const { messageString } = req.body.messageSet;
-      const idMsg = await MgsDB.create({ messageString,
-        
+      console.log("post");
+      const { messageString, newStartDate, newEndDate } = req.body.messageSet;
+      const idMsg = await MgsDB.create({ 
+        messageString,
+        newStartDate,
+        newEndDate
       });
-      //console.log(idMsg);
 
       res.status(201).send(res);
     } catch (error) {
@@ -27,10 +28,11 @@ export default function applyMsgApiEndpoints(app) {
 
   app.get("/api/stMessages", async (req, res) => {
     try {
-      const rawCodeData = await MgsDB.list(
-
+      console.log("GET01");
+      const rawCodeData = await MgsDB.showAll(
       );
-      res.status(200).send(response);
+      console.log("GET02");
+      //res.status(200).send(response);
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);

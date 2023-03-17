@@ -1,6 +1,6 @@
 import { Page } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
-import { CustomMessageCard } from "../../components";
+import { MessagesListShow } from "../../components";
 
 export default function MessagesShow() {
   const breadcrumbs = [{ content: "Messages", url: "/" }];
@@ -15,7 +15,7 @@ export default function MessagesShow() {
             onAction: () => null,
           }}  
       />
-      <CustomMessageCard />
+      <MessagesListShow />
     </Page>
   );
 }

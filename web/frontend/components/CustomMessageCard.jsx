@@ -62,9 +62,10 @@ export function CustomMessageCard() {
     console.log("handleMessageChange " + newValue);    
     // setMsgValue(newValue);
     messageToShow = newValue;
-    console.log(messageToShow);
+    
   }, []);
-  // const handleMessageChange = useCallback((newMessage) => setMsgValue(newMessage), []);
+  const handleStartDate = useCallback((startDateForm) => {startDate = startDateForm}, []);
+  const handleEndDate = useCallback((endDateForm) => {endDate = endDateForm}, []);
 
   const handleSubmit = useCallback((_event) => {
     
@@ -72,19 +73,20 @@ export function CustomMessageCard() {
       (async () => {
         const messageSet = {
           messageString: messageToShow,
+          newStartDate: startDate,
+          newEndDate: endDate
         };
-        console.log(JSON.stringify({ messageSet }));
         const response = await fetch("/api/stMessages", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({ messageSet })
-        });
-        console.log(response);
-        // const response = await fetch("/api/stMessages", messageToShow, 1);
+        }); 
 
+        console.log("vamos al GET");
         // if (response.ok) {
+          
         //   makeClean();
         //   const QRCode = await response.json();
         //   /* if this is a new QR code, then save the QR code and navigate to the edit page; this behavior is the standard when saving resources in the Shopify admin */
@@ -130,7 +132,7 @@ export function CustomMessageCard() {
         <FormLayout.Group>
             <TextField
               value={null}
-              onChange={null}
+              onChange={handleStartDate}
               label="Start date"
               type="date"
               // autoComplete="email"
@@ -142,7 +144,7 @@ export function CustomMessageCard() {
             />
             <TextField
               value={null}
-              onChange={null}
+              onChange={handleEndDate}
               label="End date"
               type="date"
               // autoComplete="email"

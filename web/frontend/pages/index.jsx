@@ -24,7 +24,14 @@ export default function HomePage() {
         primaryAction={{
           content: "Create Message",
           onAction: () => navigate("/stMessages/new"),
-        }} />
+        }}
+        secondaryActions={[
+          {
+            content: "Messages List",
+            onAction: () => navigate("/stMessages/msgShow"),
+          },
+        ]}
+        />
       <Layout>
         <Layout.Section>
 
@@ -35,6 +42,7 @@ export default function HomePage() {
               content: "Create Message",
               onAction: () => navigate("/stMessages/new"),
             }}
+            
           >
             <Stack
               wrap={false}
