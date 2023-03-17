@@ -13,7 +13,7 @@ import { TitleBar, useNavigate } from "@shopify/app-bridge-react";
 import {Redirect} from '@shopify/app-bridge/actions';
 import { trophyImage } from "../assets";
 
-import { ProductsCard, CustomMessageCard } from "../components";
+
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ export default function HomePage() {
           </Card>
         </Layout.Section>
         <Layout.Section>
-          <ProductsCard />
+
         </Layout.Section>
       </Layout>
     </Page>
