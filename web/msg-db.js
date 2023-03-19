@@ -21,7 +21,7 @@ export const MgsDB = {
   }) {
     try {
     await this.ready;
-    console.log("INSERT");
+    //console.log("INSERT");
     const query = `
       INSERT INTO ${this.msgTableName}
       (message
@@ -83,6 +83,18 @@ export const MgsDB = {
     return this.__addImageUrl(rows[0]);
   },
 
+  dateValidation: async function ({date}) {
+    await this.ready;
+    const query = `
+      SELECT COUNT(*) FROM ${this.msgTableName}
+      WHERE '${date}' BETWEEN startDate AND endDate;
+    `;
+    const rows = await this.__query(query, []);
+    //if (!Array.isArray(rows) || rows?.length !== 1) return undefined;
+
+    return rows.length;
+  },
+
   delete: async function (id) {
     await this.ready;
     const query = `
@@ -95,15 +107,15 @@ export const MgsDB = {
 
   showAll: async function () {
     await this.ready;
-    console.log("Show All");
+    //console.log("Show All");
     const query = `
       SELECT * FROM ${this.msgTableName};
     `;
     const rows = await this.__query(query, []);
-    console.log(rows);
-    if (!Array.isArray(rows) || rows?.length !== 1) return undefined;
+    //console.log(rows);
+    //if (!Array.isArray(rows) || rows?.length !== 1) return undefined;
 
-    return "Ok";
+    return rows;
   },
 
   __hasMsgsTable: async function () {

@@ -28,11 +28,23 @@ export default function applyMsgApiEndpoints(app) {
 
   app.get("/api/stMessages", async (req, res) => {
     try {
-      console.log("GET01");
-      const rawCodeData = await MgsDB.showAll(
+      //console.log("GET01");
+      const response = await MgsDB.showAll(
       );
-      console.log("GET02");
-      //res.status(200).send(response);
+      //console.log(rawCodeData);
+      res.status(200).send(response);
+
+    } catch (error) {
+      //console.error(error);
+      res.status(500).send(error.message);
+    }
+  });
+
+  app.get("/api/stMessages/:date", async (req, res) => {
+    try {
+      const response = await MgsDB.dateValidation(req.params.date);
+      console.log(`El resultado es: ${response}`);
+      res.sendStatus(200).body.send(response);
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);

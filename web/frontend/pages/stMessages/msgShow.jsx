@@ -4,6 +4,7 @@ import { MessagesListShow } from "../../components";
 
 export default function MessagesShow() {
   const breadcrumbs = [{ content: "Messages", url: "/" }];
+  
 
   return (
     <Page>

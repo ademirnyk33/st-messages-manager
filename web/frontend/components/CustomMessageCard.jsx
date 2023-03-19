@@ -50,17 +50,8 @@ export function CustomMessageCard() {
     <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
   );
 
-
-
-
-  const handleMonthChange = useCallback(
-    (month, year) => setDate({month, year}),
-    [],
-  );
   
   const handleMessageChange = useCallback((newValue) => {
-    console.log("handleMessageChange " + newValue);    
-    // setMsgValue(newValue);
     messageToShow = newValue;
     
   }, []);
@@ -75,7 +66,25 @@ export function CustomMessageCard() {
           messageString: messageToShow,
           newStartDate: startDate,
           newEndDate: endDate
-        };
+        };   
+        console.log("Antes de validar");
+        const responseRows = await fetch(`/api/stMessages/${startDate}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }); 
+
+        console.log(responseRows);
+        // const {
+        //   data: countMsg,
+        //   isLoading,
+        //   isRefetching,
+        // } = useAppQuery({
+        //   url: `/api/stMessages/${startDateForm}`,
+        // });
+        //console.log(countMsg);
+
         const response = await fetch("/api/stMessages", {
           method: "POST",
           headers: {
@@ -83,20 +92,6 @@ export function CustomMessageCard() {
           },
           body: JSON.stringify({ messageSet })
         }); 
-
-        console.log("vamos al GET");
-        // if (response.ok) {
-          
-        //   makeClean();
-        //   const QRCode = await response.json();
-        //   /* if this is a new QR code, then save the QR code and navigate to the edit page; this behavior is the standard when saving resources in the Shopify admin */
-        //   if (!QRCodeId) {
-        //     navigate(`/qrcodes/${QRCode.id}`);
-        //     /* if this is a QR code update, update the QR code state in this component */
-        //   } else {
-        //     setQRCode(QRCode);
-        //   }
-        // }
       })();
       return { status: "success" };
 

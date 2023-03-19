@@ -15,13 +15,13 @@ import { useQuery } from "react-query";
  * @returns Return value of useQuery.  See: https://react-query.tanstack.com/reference/useQuery.
  */
 export const useAppQuery = ({ url, fetchInit = {}, reactQueryOptions }) => {
-  console.log("Antes del authenticatedFetch");
+  //console.log("Antes del authenticatedFetch");
   const authenticatedFetch = useAuthenticatedFetch();
-  console.log("Antes del fetch");
+  //console.log("Antes del fetch");
   const fetch = useMemo(() => {
     return async () => {
       const response = await authenticatedFetch(url, fetchInit);
-      console.log(response.json());
+      //console.log(response.json());
       return response.json();
     };
   }, [url, JSON.stringify(fetchInit)]);
