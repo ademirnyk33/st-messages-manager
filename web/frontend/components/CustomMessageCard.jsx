@@ -14,24 +14,38 @@ import {
 } from "@shopify/polaris";
 //React-Form verificar
 import { Toast } from "@shopify/app-bridge-react";
+import { useToast } from "@shopify/app-bridge-react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
+import createApp from '@shopify/app-bridge';
 
 
 export function CustomMessageCard() {
-  const emptyToastProps = { content: null };
+  // const emptyToastProps = { content: null };
+  // const [toastProps, setToastProps] = useState(emptyToastProps);
+  // const toastMarkup = toastProps.content && !isRefetchingCount && (
+  //   <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
+  // );
+//   const config = {
+//     // The client ID provided for your application in the Partner Dashboard.
+//     apiKey: "st-messages-manager",
+//     // The host of the specific shop that's embedding your app. This value is provided by Shopify as a URL query parameter that's appended to your application URL when your app is loaded inside the Shopify admin.
+//     host: new URLSearchParams(location.search).get("host"),
+//     forceRedirect: true
+// };
+// const app = createApp(config);
+// const toastOptions = {
+//   message: 'Error saving',
+//   duration: 5000,
+//   isError: true,
+// };
+  const {show} = useToast();
+  const fetch = useAuthenticatedFetch();
   //const [messageToShow, setMsgValue] = useState("Test00");
   let messageToShow = "Hello World!";
   let startDate = Date.now;
   let endDate = Date.now;
-  const [{month, year}, setDate] = useState({month: 1, year: 2018});
-  const [selectedDates, setSelectedDates] = useState({
-    start: new Date('Wed Feb 07 2018 00:00:00 GMT-0500 (EST)'),
-    end: new Date('Wed Feb 07 2018 00:00:00 GMT-0500 (EST)'),
-  });
-  // const [isLoading, setIsLoading] = useState(true);
-  const [toastProps, setToastProps] = useState(emptyToastProps);
-  const fetch = useAuthenticatedFetch();
 
+  // const [isLoading, setIsLoading] = useState(true);
  /*  const {
     data,
     refetch: refetchProductCount,
@@ -46,9 +60,7 @@ export function CustomMessageCard() {
     },
   }); */
 
-  const toastMarkup = toastProps.content && !isRefetchingCount && (
-    <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
-  );
+  
 
   
   const handleMessageChange = useCallback((newValue) => {
@@ -62,20 +74,41 @@ export function CustomMessageCard() {
     
     //(body) => {
       (async () => {
+        //const toast = useToast();
         const messageSet = {
           messageString: messageToShow,
           newStartDate: startDate,
           newEndDate: endDate
         };   
-        console.log("Antes de validar");
-        const responseRows = await fetch(`/api/stMessages/${startDate}`, {
+        //console.log("Antes de validar");
+        const startDateValid = await fetch(`/api/stMessages/${startDate}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json"
           },
         }); 
+        const respStart = await startDateValid.json();
 
-        console.log(responseRows);
+        const endDateValid = await fetch(`/api/stMessages/${startDate}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }); 
+        const respEnd = await endDateValid.json();
+
+        //console.log(resp);
+        if(respStart.length !== 0 || respEnd.length !== 0){
+          //const toast = useToast();
+          show("Las fechas se solapan con otro mensaje activo.", {duration: 2000});
+          console.log("Error");
+          //toast.show({ content: "Your message goes here" });
+          
+          return { status: "Error" };
+        }
+
+        //console.log(resp.length);
+
         // const {
         //   data: countMsg,
         //   isLoading,
@@ -84,7 +117,7 @@ export function CustomMessageCard() {
         //   url: `/api/stMessages/${startDateForm}`,
         // });
         //console.log(countMsg);
-
+        //console.log("Antes de crear");
         const response = await fetch("/api/stMessages", {
           method: "POST",
           headers: {
@@ -92,6 +125,7 @@ export function CustomMessageCard() {
           },
           body: JSON.stringify({ messageSet })
         }); 
+        show("The message was created.", {duration: 2000});
       })();
       return { status: "success" };
 

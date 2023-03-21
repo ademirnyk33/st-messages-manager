@@ -37,7 +37,7 @@ export const MgsDB = {
     //console.log(query);
     //console.log(messageString);
     const rawResults = await this.__query(query, []);
-    //console.log("Test");
+    //console.log(rawResults);
     return rawResults[0].id;
       } catch (error){
         console.error(error);
@@ -83,16 +83,19 @@ export const MgsDB = {
     return this.__addImageUrl(rows[0]);
   },
 
-  dateValidation: async function ({date}) {
+  dateValidation: async function (date) {
+    console.log("Validation");
+    console.log(date);
     await this.ready;
     const query = `
-      SELECT COUNT(*) FROM ${this.msgTableName}
+      SELECT startDate FROM ${this.msgTableName}
       WHERE '${date}' BETWEEN startDate AND endDate;
     `;
+    console.log(query);
     const rows = await this.__query(query, []);
     //if (!Array.isArray(rows) || rows?.length !== 1) return undefined;
 
-    return rows.length;
+    return rows;
   },
 
   delete: async function (id) {
@@ -160,10 +163,12 @@ export const MgsDB = {
 
   /* Perform a query on the database. Used by the various CRUD methods. */
   __query: function (sql, params = []) {
-    //console.log(sql);
+    //console.log("__query");
     return new Promise((resolve, reject) => {
       this.db.all(sql, params, (err, result) => {
+        //console.log(result);
         if (err) {
+          
           reject(err);
           return;
         }

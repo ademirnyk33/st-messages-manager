@@ -17,15 +17,14 @@ import { useQuery } from "react-query";
 export const useAppQuery = ({ url, fetchInit = {}, reactQueryOptions }) => {
   //console.log("Antes del authenticatedFetch");
   const authenticatedFetch = useAuthenticatedFetch();
-  //console.log("Antes del fetch");
+ // console.log("Despues del authenticatedFetch");
   const fetch = useMemo(() => {
     return async () => {
       const response = await authenticatedFetch(url, fetchInit);
-      //console.log(response.json());
       return response.json();
     };
   }, [url, JSON.stringify(fetchInit)]);
-
+ // console.log("fetch.json()");
   return useQuery(url, fetch, {
     ...reactQueryOptions,
     refetchOnWindowFocus: false,

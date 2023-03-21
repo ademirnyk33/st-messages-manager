@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+//import { useState, useCallback, useEffect } from "react";
 import {Page, DataTable, useIndexResourceState, IndexTable, TextField } from '@shopify/polaris';
 //React-Form verificar
 import { Toast } from "@shopify/app-bridge-react";
@@ -6,120 +6,71 @@ import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import React from 'react';
 
 export function MessagesListShow() {
-  const emptyToastProps = { content: null };
-  const [toastProps, setToastProps] = useState(emptyToastProps);
-  const fetch = useAuthenticatedFetch();
-  const toastMarkup = toastProps.content && !isRefetchingCount && (
-    <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
-  );
-//   const rows = handleSubmit();
+  
+  // const emptyToastProps = { content: null };
+  // const [toastProps, setToastProps] = useState(emptyToastProps);
+  // const fetch = useAuthenticatedFetch();
+  // const toastMarkup = toastProps.content && !isRefetchingCount && (
+  //   <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
+  // );
+  let rowMarkup2 = [];
+  console.log("Antes de useAppQuery");
+  const {
+    data: messageList,
+    isLoading: isLoadingDiscounts,
+    isError: discountsError,
+  } = useAppQuery({ url: "/api/stMessages" });
 
-//   const rows = [
-//     ['Emerald Silk Gown', '$875.00', 124689, 140, '$122,500.00'],
-//     ['Mauve Cashmere Scarf', '$230.00', 124533, 83, '$19,090.00'],
-//     [
-//       'Navy Merino Wool Blazer with khaki chinos and yellow belt',
-//       '$445.00',
-//       124518,
-//       32,
-//       '$14,240.00',
-//     ],
-//   ];
-const fillRows = useCallback((_event) => {
-    console.log("Fill");
-    (async () => {
-        try{
-        const response = await fetch("/api/stMessages", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          },
-        }); 
-
-        console.log(response);
-    
-    } catch (error) {
-        console.error(error);
-        res.status(500).send(error.message);
-      }
-
-      })();
-      return { status: "success" };
-
-    }, []);
-    
-    //   return { VALUE: [
-    //         ['Emerald Silk Gown', '$875.00', 124689, 140, '$122,500.00'],
-    //         ['Mauve Cashmere Scarf', '$230.00', 124533, 83, '$19,090.00'],
-    //         [
-    //           'Navy Merino Wool Blazer with khaki chinos and yellow belt',
-    //           '$445.00',
-    //           124518,
-    //           32,
-    //           '$14,240.00',
-    //         ],
-    //       ] };
-    const customers = [
-        {
-          id: '3411',
-          url: '#',
-          name: 'Mae Jemison',
-          location: 'Decatur, USA',
-          orders: 20,
-          amountSpent: '$2,400',
-        },
-        {
-          id: '2561',
-          url: '#',
-          name: 'Ellen Ochoa',
-          location: 'Los Angeles, USA',
-          orders: 30,
-          amountSpent: '$140',
-        },
-      ];
       const resourceName = {
-        singular: 'customer',
-        plural: 'customers',
+        singular: 'Message',
+        plural: 'Messages',
       };
      
-    const {selectedResources, allResourcesSelected, handleSelectionChange} = useIndexResourceState(customers);
-    const rowMarkup = customers.map(
-        ({id, name, location, orders, amountSpent}, index) => (
-          <IndexTable.Row
-            id={id}
-            key={id}
-            selected={selectedResources.includes(id)}
-            position={index}
-          >
-            <IndexTable.Cell>{name}</IndexTable.Cell>
-            <IndexTable.Cell>{location}</IndexTable.Cell>
-            <IndexTable.Cell>{orders}</IndexTable.Cell>
-            <IndexTable.Cell>{amountSpent}</IndexTable.Cell>
-          </IndexTable.Row>
-        ),
-      );
-      
+    const {selectedResources, allResourcesSelected, handleSelectionChange} = useIndexResourceState(messageList);
+
+       if (messageList !== undefined){
+          console.log(messageList);
+          rowMarkup2 = messageList.map(
+          ({idMsg, message, active, startDate, endDate}, index) => (
+            <IndexTable.Row
+              id={idMsg}
+              key={idMsg}
+              selected={selectedResources.includes(idMsg)}
+              position={index}
+            >
+              <IndexTable.Cell>{message}</IndexTable.Cell>
+              <IndexTable.Cell>{active}</IndexTable.Cell>
+              <IndexTable.Cell>{startDate}</IndexTable.Cell>
+              <IndexTable.Cell>{endDate}</IndexTable.Cell>
+            </IndexTable.Row>
+          ),
+        );
+      }else{
+        console.log("No se")
+      }
+    
+
+  
   return (
-    <Page title="Sales by product">
+    <Page title="Messages List">
         <IndexTable
         resourceName={resourceName}
-        itemCount={customers.length}
+        itemCount={1}
         selectedItemsCount={
           allResourcesSelected ? 'All' : selectedResources.length
         }
         onSelectionChange={handleSelectionChange}
         headings={[
-          {title: 'Name'},
-          {title: 'Location'},
-          {title: 'Order count'},
-          {title: 'Amount spent'},
-          {title: fillRows},
+          {title: 'Message'},
+          {title: 'Active'},
+          {title: 'Start date'},
+          {title: 'End date'},
         ]}
       >
-        {rowMarkup}
+        {rowMarkup2}
       </IndexTable>
-\
-
     </Page>
   );
+
+
 }
