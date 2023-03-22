@@ -14,7 +14,7 @@ export function MessagesListShow() {
   //   <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
   // );
   let rowMarkup2 = [];
-  console.log("Antes de useAppQuery");
+  //console.log("Antes de useAppQuery");
   const {
     data: messageList,
     isLoading: isLoadingDiscounts,
@@ -52,7 +52,7 @@ export function MessagesListShow() {
 
   
   return (
-    <Page title="Messages List">
+    <Page title="List">
         <IndexTable
         resourceName={resourceName}
         itemCount={1}

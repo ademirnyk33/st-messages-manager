@@ -14,30 +14,13 @@ import {
 } from "@shopify/polaris";
 //React-Form verificar
 import { Toast } from "@shopify/app-bridge-react";
-import { useToast } from "@shopify/app-bridge-react";
+import { useToast, useNavigate } from "@shopify/app-bridge-react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import createApp from '@shopify/app-bridge';
 
 
 export function CustomMessageCard() {
-  // const emptyToastProps = { content: null };
-  // const [toastProps, setToastProps] = useState(emptyToastProps);
-  // const toastMarkup = toastProps.content && !isRefetchingCount && (
-  //   <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
-  // );
-//   const config = {
-//     // The client ID provided for your application in the Partner Dashboard.
-//     apiKey: "st-messages-manager",
-//     // The host of the specific shop that's embedding your app. This value is provided by Shopify as a URL query parameter that's appended to your application URL when your app is loaded inside the Shopify admin.
-//     host: new URLSearchParams(location.search).get("host"),
-//     forceRedirect: true
-// };
-// const app = createApp(config);
-// const toastOptions = {
-//   message: 'Error saving',
-//   duration: 5000,
-//   isError: true,
-// };
+  const navigate = useNavigate();
   const {show} = useToast();
   const fetch = useAuthenticatedFetch();
   //const [messageToShow, setMsgValue] = useState("Test00");
@@ -107,17 +90,6 @@ export function CustomMessageCard() {
           return { status: "Error" };
         }
 
-        //console.log(resp.length);
-
-        // const {
-        //   data: countMsg,
-        //   isLoading,
-        //   isRefetching,
-        // } = useAppQuery({
-        //   url: `/api/stMessages/${startDateForm}`,
-        // });
-        //console.log(countMsg);
-        //console.log("Antes de crear");
         const response = await fetch("/api/stMessages", {
           method: "POST",
           headers: {
@@ -126,6 +98,7 @@ export function CustomMessageCard() {
           body: JSON.stringify({ messageSet })
         }); 
         show("The message was created.", {duration: 2000});
+        navigate("/stMessages/msgShow");
       })();
       return { status: "success" };
 
