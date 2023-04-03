@@ -16,7 +16,9 @@ import {
 import { Toast } from "@shopify/app-bridge-react";
 import { useToast, useNavigate } from "@shopify/app-bridge-react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
+
 import createApp from '@shopify/app-bridge';
+import { getSessionToken } from '@shopify/app-bridge-utils';
 
 
 export function CustomMessageCard() {
@@ -28,24 +30,7 @@ export function CustomMessageCard() {
   let startDate = Date.now;
   let endDate = Date.now;
 
-  // const [isLoading, setIsLoading] = useState(true);
- /*  const {
-    data,
-    refetch: refetchProductCount,
-    isLoading: isLoadingCount,
-    isRefetching: isRefetchingCount,
-  } = useAppQuery({
-    url: "/api/products/count",
-    reactQueryOptions: {
-      onSuccess: () => {
-        setIsLoading(false);
-      },
-    },
-  }); */
 
-  
-
-  
   const handleMessageChange = useCallback((newValue) => {
     messageToShow = newValue;
     
@@ -55,41 +40,17 @@ export function CustomMessageCard() {
 
   const handleSubmit = useCallback((_event) => {
     
-    //(body) => {
+
       (async () => {
-        //const toast = useToast();
+
+
         const messageSet = {
           messageString: messageToShow,
           newStartDate: startDate,
           newEndDate: endDate
         };   
-        //console.log("Antes de validar");
-        const startDateValid = await fetch(`/api/stMessages/${startDate}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          },
-        }); 
-        const respStart = await startDateValid.json();
 
-        const endDateValid = await fetch(`/api/stMessages/${startDate}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          },
-        }); 
-        const respEnd = await endDateValid.json();
-
-        //console.log(resp);
-        if(respStart.length !== 0 || respEnd.length !== 0){
-          //const toast = useToast();
-          show("Las fechas se solapan con otro mensaje activo.", {duration: 2000});
-          console.log("Error");
-          //toast.show({ content: "Your message goes here" });
-          
-          return { status: "Error" };
-        }
-
+        console.log("Test01");
         const response = await fetch("/api/stMessages", {
           method: "POST",
           headers: {

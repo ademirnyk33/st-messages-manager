@@ -18,36 +18,50 @@ export default function applyMsgApiEndpoints(app) {
         newStartDate,
         newEndDate
       });
-      //console.log(idMsg);
+
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.status(201).send(res);
     } catch (error) {
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.status(500).send(error.message);
     }
   });
 
   app.get("/api/stMessages", async (req, res) => {
     try {
-      console.log("GET01");
+
       const response = await MgsDB.showAll(
       );
-      //console.log(response);
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.status(200).send(response);
 
     } catch (error) {
-      //console.error(error);
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.status(500).send(error.message);
     }
   });
 
   app.get("/api/stMessages/:date", async (req, res) => {
     try {
-      // console.log("Test validation");
-      // console.log(req.params.date);
+      console.log("Test validation");
+      const currentDate = new date();
       const response = await MgsDB.dateValidation(req.params.date);
-      //console.log(response);
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.status(200).send(response);
+    } catch (error) { 
+      res.setHeader("Access-Control-Allow-Origin", "*");  
+      res.status(500).send(error.message);
+    }
+  });
+
+  app.get("/api/currentMessage", async (req, res) => {
+    try {
+      const currentDate = new date();
+      const response = await MgsDB.currentMessage(req.params.date);
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.status(200).send(response);
     } catch (error) {
-      //console.error(error);
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.status(500).send(error.message);
     }
   });

@@ -29,7 +29,7 @@ export function MessagesListShow() {
     const {selectedResources, allResourcesSelected, handleSelectionChange} = useIndexResourceState(messageList);
 
        if (messageList !== undefined){
-          console.log(messageList);
+          //console.log(messageList);
           rowMarkup2 = messageList.map(
           ({idMsg, message, active, startDate, endDate}, index) => (
             <IndexTable.Row
@@ -46,7 +46,7 @@ export function MessagesListShow() {
           ),
         );
       }else{
-        console.log("No se")
+        //console.log("No se")
       }
     
 

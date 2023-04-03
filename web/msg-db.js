@@ -4,7 +4,7 @@
 
 import sqlite3 from "sqlite3";
 import path from "path";
-import shopify from "./shopify.js";
+import '@shopify/shopify-api/adapters/node';
 
 const DEFAULT_DB_FILE = path.join(process.cwd(), "msg_db.sqlite");
 
@@ -19,7 +19,9 @@ export const MgsDB = {
     newStartDate,
     newEndDate,
   }) {
+
     try {
+      
     await this.ready;
     //console.log("INSERT");
     const query = `
@@ -84,15 +86,33 @@ export const MgsDB = {
   },
 
   dateValidation: async function (date) {
-    console.log("Validation");
-    console.log(date);
+    // console.log("Validation");
+    // console.log(date);
     await this.ready;
     const query = `
       SELECT startDate FROM ${this.msgTableName}
       WHERE '${date}' BETWEEN startDate AND endDate;
     `;
-    console.log(query);
+    //console.log(query);
     const rows = await this.__query(query, []);
+    //if (!Array.isArray(rows) || rows?.length !== 1) return undefined;
+
+    return rows;
+  },
+
+  currentMessage: async function () {
+    //console.log("Validation");
+
+    this.ready;
+    const query = `
+      SELECT * FROM ${this.msgTableName}
+      ORDER BY idMsg DESC
+      LIMIT 1;
+    `;
+    
+    const rows = await this.__query(query, []);
+
+    //console.log(rows);
     //if (!Array.isArray(rows) || rows?.length !== 1) return undefined;
 
     return rows;
