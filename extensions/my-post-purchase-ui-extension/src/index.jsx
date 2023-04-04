@@ -17,8 +17,8 @@ import {
 } from "@shopify/post-purchase-ui-extensions-react";
 
 // For local development, replace APP_URL with your local tunnel URL.
-const APP_URL = "https://57bf-168-243-236-176.ngrok.io";
-//const APP_URL = "https://192.168.1.4:38989";
+const APP_URL = "https://e05b-168-243-236-176.ngrok.io";
+
 
 // Preload data from your app server to ensure that the extension loads quickly.
 

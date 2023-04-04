@@ -81,42 +81,10 @@ export function CustomMessageCard() {
           }
         />
         <FormLayout.Group condensed>
-        <Checkbox
-          label="Bold"
-          checked={null}
-          onChange={null}
-        />
-        <Checkbox
-          label="Italic"
-          checked={null}
-          onChange={null}
-        />
         </FormLayout.Group>
-        <FormLayout.Group>
-            <TextField
-              value={null}
-              onChange={handleStartDate}
-              label="Start date"
-              type="date"
-              // autoComplete="email"
-              helpText={
-                <span>
-                  Use this to speficy when the message begin to diplay.
-                </span>
-              }
-            />
-            <TextField
-              value={null}
-              onChange={handleEndDate}
-              label="End date"
-              type="date"
-              // autoComplete="email"
-              helpText={
-                <span>
-                  Use this to speficy when the message end to diplay.
-                </span>
-              }
-            />
+
+
+        <FormLayout.Group>                      
         </FormLayout.Group>
         <Button submit>Create</Button>
       </FormLayout>

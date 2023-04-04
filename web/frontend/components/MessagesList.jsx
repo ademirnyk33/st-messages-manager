@@ -39,9 +39,9 @@ export function MessagesListShow() {
               position={index}
             >
               <IndexTable.Cell>{message}</IndexTable.Cell>
-              <IndexTable.Cell>{active}</IndexTable.Cell>
+              {/* <IndexTable.Cell>{active}</IndexTable.Cell>
               <IndexTable.Cell>{startDate}</IndexTable.Cell>
-              <IndexTable.Cell>{endDate}</IndexTable.Cell>
+              <IndexTable.Cell>{endDate}</IndexTable.Cell> */}
             </IndexTable.Row>
           ),
         );
@@ -62,9 +62,9 @@ export function MessagesListShow() {
         onSelectionChange={handleSelectionChange}
         headings={[
           {title: 'Message'},
-          {title: 'Active'},
-          {title: 'Start date'},
-          {title: 'End date'},
+          // {title: 'Active'},
+          // {title: 'Start date'},
+          // {title: 'End date'},
         ]}
       >
         {rowMarkup2}
