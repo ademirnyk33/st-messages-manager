@@ -1,24 +1,15 @@
-import { useState, useCallback, useEffect } from "react";
+import {useState, useCallback, useMemo} from 'react';
 import {
-  Card,
-  Heading,
-  TextContainer,
-  DisplayText,
-  TextStyle,
+  Listbox,
   Form,
   FormLayout,
   TextField,
-  Checkbox,
-  DatePicker,
-  Button
+  Combobox,
+  Button,
+  Icon
 } from "@shopify/polaris";
-//React-Form verificar
-import { Toast } from "@shopify/app-bridge-react";
 import { useToast, useNavigate } from "@shopify/app-bridge-react";
-import { useAppQuery, useAuthenticatedFetch } from "../hooks";
-
-import createApp from '@shopify/app-bridge';
-import { getSessionToken } from '@shopify/app-bridge-utils';
+import {  useAuthenticatedFetch } from "../hooks";
 
 
 export function CustomMessageCard() {
@@ -27,17 +18,15 @@ export function CustomMessageCard() {
   const fetch = useAuthenticatedFetch();
   //const [messageToShow, setMsgValue] = useState("Test00");
   let messageToShow = "Hello World!";
-  let startDate = Date.now;
-  let endDate = Date.now;
+  // let startDate = Date.now;
+  // let endDate = Date.now;
 
 
   const handleMessageChange = useCallback((newValue) => {
     messageToShow = newValue;
     
   }, []);
-  const handleStartDate = useCallback((startDateForm) => {startDate = startDateForm}, []);
-  const handleEndDate = useCallback((endDateForm) => {endDate = endDateForm}, []);
-
+  
   const handleSubmit = useCallback((_event) => {
     
 
