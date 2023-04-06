@@ -19,7 +19,7 @@ import {
 // For local development, replace APP_URL with your local tunnel URL.
 
 
-const APP_URL = "https://e05b-168-243-236-176.ngrok.io";
+const APP_URL = "https://3239-168-243-236-176.ngrok.io";
 
 
 // Preload data from your app server to ensure that the extension loads quickly.

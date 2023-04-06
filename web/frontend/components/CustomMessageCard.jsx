@@ -35,8 +35,8 @@ export function CustomMessageCard() {
 
         const messageSet = {
           messageString: messageToShow,
-          newStartDate: startDate,
-          newEndDate: endDate
+          // newStartDate: startDate,
+          // newEndDate: endDate
         };   
 
         console.log("Test01");
